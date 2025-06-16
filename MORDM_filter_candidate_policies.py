@@ -22,7 +22,7 @@ if __name__ == "__main__":
     #policy_types = ["All levers"]
     load_results = 1
     if load_results == 1:
-        date = "2024-03-29"
+        date = "2025-03-07"
         nfe = 1000000
         for idx, policy_type in enumerate(policy_types):
             if idx == 0:
@@ -40,7 +40,7 @@ if __name__ == "__main__":
                     scenario_count = scenario_count+1
 
             if idx == 1:
-                date = "2024-03-31"
+                date = "2025-03-05"
                 nfe = 1000000
                 t1 = f"./output_data/moea_results/{policy_type}{nfe}_nfe_directed_search_MORDM_{date}.p"
                 # =str(nfe)+'_nfe_directed_search_sequential_'+str(date.today())+'_'+str(n_scenarios)+'_scenarios'
@@ -52,8 +52,16 @@ if __name__ == "__main__":
                 for results in results_list:
                     results["Policy type"] = policy_type
                     df_full = pd.concat([df_full, results], ignore_index=True)
+                    # The model object already contains all information about levers and uncertainties, so no need to specify these things again
+    #%% Simplest mode - just take output policies, combine with STA policies
+    df_candidate_policies = pd.concat([df_full, df_sta], ignore_index=True)
 
-    # The model object already contains all information about levers and uncertainties, so no need to specify these things again
+#
+    filename = f"{date}_{nfe}_candidate_policies.p"
+    with open(f"./output_data/candidate_policies/{filename}", "wb") as f:
+        pickle.dump(df_candidate_policies, f)
+#%%
+   
     df_full_sample = df_full.sample(100)
 
     # %% Prepare main analysis dataframes
@@ -556,7 +564,7 @@ if __name__ == "__main__":
             [df_candidate_policies_sampled, df_full[df_full["Policy type"] == policy_type].sample(n_policies)])
 
     df_candidate_policies = pd.concat([df_candidate_policies_sampled, df_sta], join="inner", axis=0)
-
+    df_canddiate_policies = df_full
     # %%  Parcoords of candidate policies Plot policies against policy levers
     from ema_workbench.analysis import parcoords
     import matplotlib.pyplot as plt
@@ -586,6 +594,6 @@ if __name__ == "__main__":
     plt.title("Parallel Coordinates Plot of Policies")
     plt.show()
     # %% Save the dataframe with candidate policies
-    #filename = date+"_"+str(nfe)+"candidate_policies"+".p"
+ 
     filename = f"{date}_{nfe}candidate_policies.p"
     pickle.dump(df_candidate_policies, open("./output_data/candidate_policies/"+filename, "wb"))

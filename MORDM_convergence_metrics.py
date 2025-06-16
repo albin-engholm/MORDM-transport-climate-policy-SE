@@ -20,12 +20,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 # %% Load and prepare data
 
-#policy_types=["All levers", "No transport efficiency"]
+policy_types=["All levers", "No transport efficiency"]
 policy_types = ["No transport efficiency"]  # ,
-#policy_types = ["All levers"]
-date = '2025-03-05'  # Specify date the MORDM MOEA was started
+policy_types = ["All levers"]
+date = '2025-03-07'  # Specify date the MORDM MOEA was started
 date_archive = date
-nfe_MOEA = 10002  # Specify the number of nfes used for the MORDM MOEA
+nfe_MOEA = 1000000  # Specify the number of nfes used for the MORDM MOEA
 
 all_archives = []
 
@@ -113,6 +113,7 @@ for policy_type in policy_types:
     import pickle
     import seaborn as sns
     import matplotlib.pyplot as plt
+
     metrics = pickle.load(
         open(f"./output_data/moea_results/{str(nfe_MOEA)}_{policy_type}_{date_archive}_convergence_metrics.p", "rb"))
     if isinstance(metrics, list) and len(metrics) > 0:
@@ -148,3 +149,5 @@ for policy_type in policy_types:
     sns.despine(fig)
     plt.suptitle(f"Convergence metrics for {policy_type}", y=0.9)
     plt.show()
+    fig.savefig(f"./figs/paper/convergence_metrics_{str(nfe_MOEA)}_{policy_type}_{date_archive}.png",
+                          dpi=300, format="png", bbox_inches="tight", transparent=True)

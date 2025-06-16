@@ -43,8 +43,8 @@ if __name__ == "__main__":
     date = date.today()  # Date to use for storing files
     # What set of policies should the MOEA be run for?
     #policy_types = ["All levers", "No transport efficiency"]
-    policy_types = ["No transport efficiency"]
-    #policy_types = ["All levers"]
+    #policy_types = ["No transport efficiency"]
+    policy_types = ["All levers"]
 
     # Optimization parameters
     # Set epsilons

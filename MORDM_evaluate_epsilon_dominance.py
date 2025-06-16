@@ -11,7 +11,7 @@ from ema_workbench.em_framework.optimization import (HypervolumeMetric,
                                                      EpsilonProgress,
                                                      ArchiveLogger, epsilon_nondominated)
 # Load the data
-file_str = "10000_No transport efficiency_2025-03-05"
+file_str = "1000000_All levers_2025-03-07"
 archives = ArchiveLogger.load_archives("./archives/"+file_str+".tar.gz")
 
 # Filter out empty dataframes

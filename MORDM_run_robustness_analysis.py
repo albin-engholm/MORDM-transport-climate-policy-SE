@@ -22,7 +22,7 @@ if __name__ == "__main__":
         count = 0
         for policy_type in policy_types:
             if count == 0:
-                date = "2024-03-29"
+                date = "2025-03-07"
                 nfe = 1000000
                 t1 = f"./output_data/moea_results/{policy_type}{nfe}_nfe_directed_search_MORDM_{date}.p"
                 import pickle
@@ -37,7 +37,7 @@ if __name__ == "__main__":
                     scenario_count = scenario_count+1
 
             if count == 1:
-                date = "2024-03-31"
+                date = "2025-03-05"
                 nfe = 1000000
                 t1 = f"./output_data/moea_results/{policy_type}{nfe}_nfe_directed_search_MORDM_{date}.p"
                 import pickle
@@ -51,9 +51,9 @@ if __name__ == "__main__":
             count = count+1
 
         # Load candidate policy dataframe
-        date = "2024-03-31"
+        date = "2025-03-05"
         nfe = 1000000
-        filename = f"./output_data/candidate_policies/{date}_{nfe}candidate_policies.p"
+        filename = f"./output_data/candidate_policies/{date}_{nfe}_candidate_policies.p"
         candidate_policy_data = pickle.load(open(filename, "rb"))
         model.working_directory = "./models"
     # The model object already contains all information about levers and uncertainties
@@ -183,6 +183,7 @@ if __name__ == "__main__":
         nr_scenarios_per_uncertainty = 100
         nr_scenarios = int(nr_scenarios_per_uncertainty *
                            len(model.uncertainties.keys()))  # select number of scenarios (per policy)
+        nr_scenarios = 10000
         scenarios = samplers.sample_uncertainties(model, nr_scenarios, sampler=samplers.LHSSampler())
         # Create scenario objects of the sampled scenarios and add to scenarioset
         for i in range(nr_scenarios):
@@ -213,7 +214,7 @@ if __name__ == "__main__":
         results = [outcomes, experiments]
         results_list_OE.append(results)
         # %% Save results
-    save_results = 0
+    save_results = 1
     if save_results == 1:
         from datetime import date
         from ema_workbench import save_results
